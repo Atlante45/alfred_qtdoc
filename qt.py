@@ -18,6 +18,11 @@ DOC_URL = 'http://doc.qt.io/qt-5/'
 CLASSES_URL = DOC_URL + 'classes.html'
 SEARCH_URL = DOC_URL + 'search-results.html?q='
 
+# Shown in error logs. Users can find help here
+HELP_URL = 'https://github.com/Atlante45/alfred-qtdoc'
+
+UPDATE_SETTINGS = {'github_slug': 'Atlante45/alfred-qtdoc'}
+
 log = None
 
 def request_classes():
@@ -49,7 +54,7 @@ def main(wf):
         wf.add_item('A newer version is available',
                     '↩ to install update',
                     autocomplete='workflow:update',
-                    icon=ICON_UPDATE)
+                    icon=ICON_INFO)
     
     # Cleaned up query
     query = 'q' + wf.args[0].replace(" ", "").lower()
@@ -79,7 +84,8 @@ def main(wf):
 
 
 if __name__ == '__main__':
-    wf = Workflow()
+    wf = Workflow(help_url=HELP_URL,
+                  update_settings=UPDATE_SETTINGS)
     # Assign Workflow logger to a global variable for convenience
     log = wf.logger
     sys.exit(wf.run(main))
